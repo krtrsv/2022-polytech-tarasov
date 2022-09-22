@@ -1,6 +1,7 @@
+#include <deque>
 #include <iostream>
-#include <algorithm>
-#include <math.h>
+#include "parser.h"
+#include "colors.h"
 
 int main() {
   // Initialize expression string
@@ -12,35 +13,31 @@ int main() {
   // Get expression line
   std::getline(std::cin, expr);
 
-  // Remove spaces from expression
-  expr.erase(std::remove_if(expr.begin(), expr.end(), isspace), expr.end());
+  // Normal exit
+  if (expr == "exit")
+      exit(0);
 
-  std::size_t pos{};
+  // Tokenize expression
+  std::deque<Token> tokens = tokenize(expr);
 
-  // Get first operand
-  const int n1 {std::stoi(expr, &pos)};
-
-  // Get operator
-  const char op = expr.at(pos);
-
-  // Get second operand
-  const int n2 {std::stoi(expr.substr(++pos))};
-
-  int res;
+  // Produce postfix notation
+  std::deque<Token> queue = shunting_yard(tokens);
 
   // Solve expression
-  switch (op) {
-    case '+': res = n1 + n2; break;
-    case '-': res = n1 - n2; break;
-    case '*': res = n1 * n2; break;
-    case '/': res = n1 / n2; break;
-    case '^': res = pow(n1, n2); break;
-    default:
-      std::cerr << "дурак" << std::endl;
-      exit(1);
-  }
+  auto res = solve(queue);
 
-  std::cout << res << std::endl;
+  // Qalc-like output
+  std::cout << "\n    " << ITALIC << BOLD;
+  for (Token token : tokens) {
+      if (token.type == Token::Type::Number) {
+        std::cout << CYAN;
+        std::cout << token.num << " ";
+      } else {
+        std::cout << WHITE;
+        std::cout << token.str << " ";
+      }
+  }
+  std::cout << WHITE << "= " << GREEN << res << RESET << "\n" << std::endl;
 
   // Infinite recursion
   return main();
