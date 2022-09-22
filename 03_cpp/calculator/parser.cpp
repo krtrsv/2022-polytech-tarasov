@@ -6,22 +6,6 @@
 #include <vector>
 #include "parser.h"
 
-//class Token {
-//public:
-//  enum class Type { Number, Operator, LeftParenthesis, RightParenthesis };
-//
-//  Type type;
-//  std::string str;
-//  int num;
-//  bool right_associative;
-//  int precedence;
-//
-//  Token(Type t, std::string s, int p = 0, bool a = false)
-//      : type{t}, str{s}, right_associative{a}, precedence{p} {}
-//
-//  Token(int n) : type{Token::Type::Number}, num{n} {}
-//};
-
 Token::Token(Type t, std::string s, int p, bool a) : type{t}, str{s}, right_associative{a}, precedence{p} {}
 Token::Token(int n) : type{Token::Type::Number}, num{n} {}
 
@@ -34,11 +18,8 @@ std::deque<Token> tokenize(std::string expr) {
   // Iterate through expression
   for (int i = 0; i < expr.length(); ++i) {
 
+    // Add number to tokens queue
     if (isdigit(expr[i])) {
-      // size_t pos{};
-      // int n{std::stoi(expr.substr(i), &pos)};
-      // tokens.push_back(Token{n});
-      // i = pos;
       const auto b = i;
       while(isdigit(expr[i])) {
           ++i;
@@ -48,6 +29,7 @@ std::deque<Token> tokenize(std::string expr) {
       --i;
     }
 
+    // Add operator to tokens queue
     else {
       int pr;          // precedence
       bool ra = false; // right associativity
