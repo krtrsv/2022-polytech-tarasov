@@ -1,7 +1,10 @@
+#include "colors.hpp"
+#include "lexer.hpp"
+#include "parser.hpp"
+#include "solver.hpp"
+#include "token.hpp"
 #include <deque>
 #include <iostream>
-#include "parser.h"
-#include "colors.h"
 
 int main() {
   // Initialize expression string
@@ -15,7 +18,7 @@ int main() {
 
   // Normal exit
   if (expr == "exit")
-      exit(0);
+    exit(0);
 
   // Tokenize expression
   std::deque<Token> tokens = tokenize(expr);
@@ -27,17 +30,21 @@ int main() {
   auto res = solve(queue);
 
   // Qalc-like output
-  std::cout << "\n    " << ITALIC << BOLD;
+  std::cout << "\n    ";
   for (Token token : tokens) {
-      if (token.type == Token::Type::Number) {
-        std::cout << CYAN;
-        std::cout << token.num << " ";
-      } else {
-        std::cout << WHITE;
-        std::cout << token.str << " ";
-      }
+    if (token.type == Token::Type::Number) {
+      std::cout << CYAN;
+      if (token.num < 0)
+        std::cout << RESET << "(" << CYAN << token.num << RESET << ") ";
+      else
+        std::cout << CYAN << token.num << " ";
+
+    } else {
+      std::cout << RESET;
+      std::cout << token.str << " ";
+    }
   }
-  std::cout << WHITE << "= " << GREEN << res << RESET << "\n" << std::endl;
+  std::cout << RESET << "= " << GREEN << res << RESET << "\n" << std::endl;
 
   // Infinite recursion
   return main();
