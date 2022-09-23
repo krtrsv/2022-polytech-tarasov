@@ -1,8 +1,8 @@
-#include <deque>
-#include <cmath>
-#include <vector>
-#include <iostream>
 #include "token.hpp"
+#include <cmath>
+#include <deque>
+#include <iostream>
+#include <vector>
 
 int solve(std::deque<Token> queue) {
   std::vector<int> stack;
@@ -30,7 +30,7 @@ int solve(std::deque<Token> queue) {
         break;
       case '/':
         if (rhs == 0) {
-          std::cerr << "Division by zero" <<std::endl;
+          std::cerr << "Division by zero" << std::endl;
           return 0;
         }
         stack.push_back(lhs / rhs);
