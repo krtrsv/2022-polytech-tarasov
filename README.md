@@ -1,5 +1,5 @@
-> Crippling the minds, they hide behind the millions of us
->
-> Drunken on the steps are high, this fall their bones will open
+`CFLAGS="-O3 -march=native -funroll-loops -fomg-optimize -pipe -fno-plt"`
 
-*Sound and Silence - Dead Poet Society*
+MIT License
+
+A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
