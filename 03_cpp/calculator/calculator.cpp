@@ -17,8 +17,10 @@ int main() {
   std::getline(std::cin, expr);
 
   // Normal exit
-  if (expr == "exit")
+  if (std::cin.fail() || expr == "exit") {
+    std::cout << ITALIC << "\n Goodbye, desu\n" << RESET << std::endl;
     exit(0);
+  }
 
   // Tokenize expression
   std::deque<Token> tokens = tokenize(expr);
