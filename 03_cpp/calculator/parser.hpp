@@ -5,6 +5,6 @@
 #include <deque>
 #include <string>
 
-std::deque<Token> shunting_yard(std::deque<Token> tokens);
+std::pair<int, std::deque<Token>> shunting_yard(std::deque<Token> tokens);
 
 #endif

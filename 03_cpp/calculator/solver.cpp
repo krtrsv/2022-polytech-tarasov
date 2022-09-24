@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-int solve(std::deque<Token> queue) {
+std::pair<int, int> solve(std::deque<Token> queue) {
   std::vector<int> stack;
   while (!queue.empty()) {
     const auto token = queue.front();
@@ -30,8 +30,7 @@ int solve(std::deque<Token> queue) {
         break;
       case '/':
         if (rhs == 0) {
-          std::cerr << "Division by zero" << std::endl;
-          return 0;
+          return std::pair<int, int>(136, 0); // SIGFPE
         }
         stack.push_back(lhs / rhs);
         break;
@@ -46,5 +45,5 @@ int solve(std::deque<Token> queue) {
       }
     }
   }
-  return stack.back();
+  return std::pair<int, int>(0, stack.back());
 }

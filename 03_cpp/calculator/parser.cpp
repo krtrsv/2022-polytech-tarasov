@@ -1,10 +1,11 @@
 #include "parser.hpp"
 #include <algorithm>
 #include <deque>
+#include <iostream>
 #include <math.h>
 #include <vector>
 
-std::deque<Token> shunting_yard(std::deque<Token> tokens) {
+std::pair<int, std::deque<Token>> shunting_yard(std::deque<Token> tokens) {
   std::deque<Token> queue;
   std::vector<Token> stack;
   for (Token token : tokens) {
@@ -35,22 +36,21 @@ std::deque<Token> shunting_yard(std::deque<Token> tokens) {
              stack.back().type != Token::Type::LeftParenthesis) {
         queue.push_back(stack.back());
         stack.pop_back();
-        match = true;
+      }
+      if (stack.empty()) {
+        return std::pair<int, std::deque<Token>>(-1, {});
       }
       stack.pop_back();
-      if (!match && stack.empty()) {
-        return {};
-      }
     } break;
     default:
       break;
     }
   }
   while (!stack.empty()) {
-    if (stack.back().type != Token::Type::LeftParenthesis) {
-      queue.push_back(std::move(stack.back()));
-      stack.pop_back();
-    }
+    if (stack.back().type == Token::Type::LeftParenthesis)
+      return std::pair<int, std::deque<Token>>(-1, {});
+    queue.push_back(std::move(stack.back()));
+    stack.pop_back();
   }
-  return queue;
+  return std::pair<int, std::deque<Token>>(0, queue);
 }

@@ -3,13 +3,21 @@
 #include <iostream>
 #include <regex>
 
+// Returns pair of tokens and unknown characters
 std::deque<Token> tokenize(std::string expr) {
+  if (expr.empty()) {
+    return std::deque<Token>{Token{0}};
+  }
   std::deque<Token> tokens;
   std::regex r(R"(\d+|[+\-*/^()])");
 
   // Splitting expression to tokens
   auto tokens_begin = std::sregex_iterator(expr.begin(), expr.end(), r);
   auto tokens_end = std::sregex_iterator();
+
+  if (std::distance(tokens_begin, tokens_end) == 0) {
+    return std::deque<Token>{Token{0}};
+  }
 
   // Default token type
   auto type = Token::Type::Operator;

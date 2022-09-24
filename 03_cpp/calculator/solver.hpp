@@ -4,6 +4,6 @@
 #include "token.hpp"
 #include <deque>
 
-int solve(std::deque<Token> queue);
+std::pair<int, int> solve(std::deque<Token> queue);
 
 #endif

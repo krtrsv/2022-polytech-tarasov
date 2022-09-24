@@ -16,6 +16,7 @@
         calculator = (with pkgs; stdenv.mkDerivation {
           pname = "calculator";
           version = "2.0.0";
+          meta.mainProgram = "calculator";
           src = ./.;
           nativeBuildInputs = [
             cmake

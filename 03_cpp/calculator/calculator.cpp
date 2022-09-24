@@ -24,10 +24,28 @@ int main() {
   std::deque<Token> tokens = tokenize(expr);
 
   // Produce postfix notation
-  std::deque<Token> queue = shunting_yard(tokens);
+  auto queue = shunting_yard(tokens);
+
+  // Catch mismatched parentheses
+  if (queue.first == -1) {
+    std::cerr << RED << "\n  Error" << RESET << ": " << ITALIC
+              << "Mismatched parentheses, desu\n"
+              << RESET << std::endl;
+    // Start again
+    return main();
+  }
 
   // Solve expression
-  auto res = solve(queue);
+  auto res = solve(queue.second);
+
+  // Catch sigfpe
+  if (res.first == 136) {
+    std::cerr << RED << "\n  Error" << RESET << ": " << ITALIC
+              << "Division by zero, desu\n"
+              << RESET << std::endl;
+    // Start again
+    return main();
+  }
 
   // Qalc-like output
   std::cout << "\n    ";
@@ -44,7 +62,8 @@ int main() {
       std::cout << token.str << " ";
     }
   }
-  std::cout << RESET << "= " << GREEN << res << RESET << "\n" << std::endl;
+  std::cout << RESET << "= " << GREEN << res.second << RESET << "\n"
+            << std::endl;
 
   // Infinite recursion
   return main();
