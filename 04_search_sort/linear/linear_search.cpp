@@ -1,5 +1,4 @@
 #include <cassert>
-#include <iostream>
 
 #define RESULT_SIZE 1024
 
