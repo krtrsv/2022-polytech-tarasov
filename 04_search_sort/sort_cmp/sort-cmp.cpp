@@ -12,7 +12,7 @@ int partition(int arr[], int lo, int hi);
 int *swap(int arr[], int what, int with);
 
 int main() {
-  long int help[] = {
+  long long int help[] = {
     10,
     100,
     1000,
