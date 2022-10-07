@@ -27,7 +27,7 @@ void print_array(int arr[], int n, bool show_index = false)
         if(show_index)
             std::cout << i << ": ";
         std::cout << arr[i];
-        if(i != n)
+        if(i + 1 != n)
             std::cout << ", ";
     }
     std::cout << "}" << std::endl;
