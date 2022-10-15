@@ -1,8 +1,12 @@
 #include <cassert>
-#include <cstring>
 
 unsigned int length(const char* str) {
-  return (str == nullptr) ? 0 : strlen(str);
+  if (!str)
+    return 0;
+  const char* end = str;
+  for( ; *end != '\0'; ++end)
+    ;
+  return end - str;
 }
 
 int main() {
