@@ -20,30 +20,30 @@ struct Student {
 
 class StudentList {
 private:
-  Student *students;
-  int length;
+  Student *_stud;
+  std::size_t _size;
 
-  StudentList& _set_score(const char *n, int ns) {
-    for (int i = 0; i < length; ++i) {
-      if (!std::strcmp(students[i].name, n)) {
-        students[i].score = ns;
+  StudentList &_set_score(const char *n, int ns) {
+    for (std::size_t i = 0; i < _size; ++i) {
+      if (!std::strcmp(_stud[i].name, n)) {
+        _stud[i].score = ns;
         return *this;
       }
     }
     return *this;
   }
 
-  StudentList& _remove(const char *n) {
-    for (int i = 0; i < length; ++i) {
-      if (!std::strcmp(students[i].name, n)) {
-        for (int x = i; x < length - 1; ++x)
-          students[x] = students[x + 1];
+  StudentList &_remove(const char *n) {
+    for (std::size_t i = 0; i < _size; ++i) {
+      if (!std::strcmp(_stud[i].name, n)) {
+        for (std::size_t x = i; x < _size - 1; ++x)
+          _stud[x] = _stud[x + 1];
         Student *tmp =
-            (Student *)std::realloc(students, (length - 1) * sizeof(Student));
-        if (tmp == NULL && length > 1)
+            (Student *)std::realloc(_stud, (_size - 1) * sizeof(Student));
+        if (tmp == NULL && _size > 1)
           exit(EXIT_FAILURE);
-        length--;
-        students = tmp;
+        _size--;
+        _stud = tmp;
         return *this;
       }
     }
@@ -51,44 +51,79 @@ private:
   }
 
 public:
-  StudentList() {
-    students = {};
-    length = 0;
+  StudentList() : _size{0} {}
+
+  StudentList(std::initializer_list<Student> list)
+      : _stud{new Student[list.size()]}, _size{list.size()} {
+    for (std::size_t i = 0; const auto &elem : list) {
+      _stud[i] = elem;
+      i++;
+    }
   }
 
-  StudentList(std::initializer_list<Student> s) {
-    length = s.size();
-    if (!length)
-      StudentList();
-    students = (Student *)std::realloc(students, length * sizeof(Student));
-    for (int i = 0; i != length; ++i)
-      students[i] = s.begin()[i];
+  StudentList(const StudentList &other) : _size{other._size} {
+    delete[] _stud;
+    _stud = other._stud;
   }
 
-  StudentList(const StudentList &other) {
-    length = other.length;
-    students = (Student *)std::realloc(students, length * sizeof(Student));
-    for (int i = 0; i != length; ++i)
-      students[i] = other.students[i];
-  }
+  ~StudentList() {
+    if (_stud) {
+      delete[] _stud;
+      _stud = nullptr;
+    }
+  };
 
+public:
   StudentList &operator=(const StudentList &other) {
     if (this == &other)
       return *this;
-    length = other.length;
-    students = (Student *)std::realloc(students, length * sizeof(Student));
-    for (int i = 0; i != length; ++i)
-      students[i] = other.students[i];
+    _size = other._size;
+    _stud = (Student *)std::realloc(_stud, _size * sizeof(Student));
+    for (std::size_t i = 0; i != _size; ++i)
+      _stud[i] = other._stud[i];
     return *this;
   }
 
+  friend std::ostream &operator<<(std::ostream &out, StudentList &sl) {
+    if (sl._size == 0) {
+      out << "[]";
+      return out;
+    }
+    out << "[\n";
+    for (std::size_t i = 0; i < sl._size; ++i) {
+      out << "  " << sl._stud[i];
+      if (i + 1 != sl._size)
+        out << ", \n";
+    }
+    out << "\n]";
+    return out;
+  }
+
+  const bool operator==(const StudentList &sl) const {
+    if (sl._size != _size)
+      return false;
+    for (std::size_t i = 0; i != _size; ++i) {
+      if (_stud[i] != sl._stud[i])
+        return false;
+    }
+    return true;
+  }
+
+public:
   /// Append `Student` object to students array
-  StudentList &append(Student &s) {
-    students =
-        (Student *)std::realloc(students, (length + 1) * sizeof(Student));
-    students[length] = s;
-    length++;
+  StudentList &append(Student &stud) {
+    _size++;
+    auto tmp = new Student[_size];
+    for (std::size_t i = 0; i < _size - 1; ++i)
+      tmp[i] = _stud[i];
+    tmp[_size - 1] = stud;
+    delete[] _stud;
+    _stud = tmp;
     return *this;
+  }
+  StudentList &append(const char *n, int s) {
+    auto stud = Student{n, s};
+    return this->append(stud);
   }
 
   /// Remove first occurance of student in students array
@@ -97,22 +132,23 @@ public:
 
   /// Set score of student
   StudentList &set_score(const char *n, int ns) { return _set_score(n, ns); }
-  StudentList &set_score(Student &sl, int ns) { return _set_score(sl.name, ns); }
+  StudentList &set_score(Student &sl, int ns) {
+    return _set_score(sl.name, ns);
+  }
 
   /// Get average score of students
   double get_avg_score() const {
     double score_sum = 0;
-    for (int i = 0; i < length; ++i) {
-      score_sum += students[i].score;
+    for (std::size_t i = 0; i < _size; ++i) {
+      score_sum += _stud[i].score;
     }
-    return score_sum / length;
+    return score_sum / _size;
   }
 
   Student find_student(const char *n) {
-    for (int i = 0; i < length; ++i) {
-      if (!std::strcmp(students[i].name, n)) {
-        return students[i];
-      }
+    for (std::size_t i = 0; i < _size; ++i) {
+      if (!std::strcmp(_stud[i].name, n))
+        return _stud[i];
     }
     return Student{};
   }
@@ -120,10 +156,9 @@ public:
   /// Get array of students with score >6
   StudentList get_best_students() const {
     StudentList best_students{};
-    for (int i = 0; i < length; ++i) {
-      if (students[i].score > 6) {
-        best_students.append(students[i]);
-      }
+    for (std::size_t i = 0; i < _size; ++i) {
+      if (_stud[i].score > 6)
+        best_students.append(_stud[i]);
     }
     return best_students;
   }
@@ -131,43 +166,10 @@ public:
   /// Get array of students with score <4
   StudentList get_worst_students() const {
     StudentList worst_students{};
-    for (int i = 0; i < length; ++i) {
-      if (students[i].score < 4) {
-        worst_students.append(students[i]);
-      }
+    for (std::size_t i = 0; i < _size; ++i) {
+      if (_stud[i].score < 4)
+        worst_students.append(_stud[i]);
     }
     return worst_students;
   }
-
-  friend std::ostream &operator<<(std::ostream &out, StudentList &sl) {
-    if (sl.length == 0) {
-      out << "[]";
-      return out;
-    }
-    out << "[\n";
-    for (int i = 0; i < sl.length; ++i) {
-      out << "  " << sl.students[i];
-      if (i + 1 != sl.length)
-        out << ", \n";
-    }
-    out << "\n]";
-    return out;
-  }
-
-  const bool operator==(const StudentList &sl) const {
-    if (sl.length != length)
-      return false;
-    bool is_eq = true;
-    for (int i = 0; i != length; ++i) {
-      if (students[i] != sl.students[i])
-        return false;
-    }
-    return true;
-  }
-
-  ~StudentList() {
-    if (students)
-      delete students;
-    students = nullptr;
-  };
 };
