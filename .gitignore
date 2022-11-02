@@ -34,3 +34,13 @@
 # Vscode || Clion files
 .vscode
 .idea
+
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+cmake_install.cmake
+Makefile
+build/
+.cache/
+_deps/
+valgrind-out.txt
