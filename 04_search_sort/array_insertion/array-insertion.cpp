@@ -9,7 +9,7 @@ int main() {
   //       rN - result
 
   // `insert` example
-  int a0[10] =          {0, 1, 2, 3,      4, 5, 6, 7, 8, 9};
+  int a0[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
   int expected_r0[11] = {0, 1, 2, 3, 100, 4, 5, 6, 7, 8, 9};
 
   auto r0 = insert(a0, 10, 100, 4);
@@ -24,7 +24,7 @@ int main() {
   assert(search_position(a2, 4, 7) == 4);
 
   // `insert_sorted` example
-  int a4[10] =          {0, 1, 2, 3, 4, 5,    6, 7, 8, 9};
+  int a4[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
   int expected_r4[11] = {0, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9};
 
   auto r4 = insert_sorted(a4, 10, 5);

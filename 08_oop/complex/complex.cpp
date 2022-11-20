@@ -1,5 +1,5 @@
-#include <cmath>
 #include "complex.h"
+#include <cmath>
 #include <doctest.h>
 
 const Complex Complex::operator+(const Complex rv) const {

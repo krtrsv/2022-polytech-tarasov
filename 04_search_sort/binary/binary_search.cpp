@@ -15,7 +15,7 @@ int binary_search(const int seq[], const int num, int high, int low) {
 
 int main() {
   int seq[10];
-  for(auto i = 0; i < 10; ++i)
+  for (auto i = 0; i < 10; ++i)
     seq[i] = i;
 
   assert(binary_search(seq, 6, 9, 0) == 6);

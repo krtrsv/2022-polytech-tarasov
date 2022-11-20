@@ -34,4 +34,4 @@ TEST_CASE("Generic tests") {
       {"array_token", ArrayToken({NumToken(1), StringToken("ok")})}}}.serialize(),
       "{\"array_token\":[1,\"ok\"]}");
 }
-  // clang-format on
+// clang-format on

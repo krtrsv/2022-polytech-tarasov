@@ -12,14 +12,9 @@ int partition(int arr[], int lo, int hi);
 int *swap(int arr[], int what, int with);
 
 int main() {
-  long long int help[] = {
-    10,
-    100,
-    1000,
-    1000000, // dead point
-    1000000000,
-    1000000000000
-  };
+  long long int help[] = {10,         100,          1000,
+                          1000000, // dead point
+                          1000000000, 1000000000000};
 
   for (int i = 0; i != 5; ++i) {
 
@@ -40,10 +35,8 @@ int main() {
     t2 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> qs_ms = t2 - t1;
 
-    std::printf("%.0e: %.5f (ss), %.5f (qs)\n",
-                static_cast<double>(n),
-                ss_ms.count(),
-                qs_ms.count());
+    std::printf("%.0e: %.5f (ss), %.5f (qs)\n", static_cast<double>(n),
+                ss_ms.count(), qs_ms.count());
   }
   return 0;
 }
