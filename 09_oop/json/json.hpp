@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sstream>
 #include <string>
 #include <unordered_map>
 
@@ -47,29 +46,3 @@ struct Json {
     return out;
   }
 };
-
-// int main() {
-//   // std::unordered_map<std::string, BasicToken> a = {
-//   //     {"int_token", NumToken(9090)},
-//   //     {"str_token", StringToken("hi")},
-//   //     {"bool_token", BoolToken(true)},
-//   //     {"array_token", ArrayToken({NumToken(1), StringToken("ok")})}};
-//   //
-//   // Json json{
-//   // std::unordered_map<std::string, BasicToken>{
-//   //     {"int_token", NumToken(9090)},
-//   //     {"str_token", StringToken("hi")},
-//   //     {"bool_token", BoolToken(true)},
-//   //     {"array_token", ArrayToken({NumToken(1), StringToken("ok")})}}
-//   //   };
-//   //
-//   // std::cout << json.serialize() << std::endl;
-//   std::cout << Json{std::unordered_map<std::string, BasicToken>{
-//                         {"int_token", NumToken(9090)},
-//                         {"str_token", StringToken("hi")},
-//                         {"bool_token", BoolToken(true)},
-//                         {"array_token",
-//                          ArrayToken({NumToken(1), StringToken("ok")})}}}
-//                    .serialize()
-//             << std::endl;
-// }
