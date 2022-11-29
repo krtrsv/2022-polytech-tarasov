@@ -1,8 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "linked_list.hpp"
 #include <doctest.h>
-#include <iostream>
-#include <unordered_map>
 
 TEST_CASE("Elements can be inserted") {
   LinkedList<int> ll{1, 2, 3, 4, 5};
