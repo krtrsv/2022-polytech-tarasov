@@ -1,22 +1,38 @@
-#include <utility>
-
-#define OK 0
-#define EMPTY 1
-
-struct Node {
+struct QNode {
   int data;
-  Node *next;
+  QNode *next;
+  QNode(int d) {
+    data = d;
+    next = nullptr;
+  }
 };
 
-inline void enqueue(Node **head, int value) {
-  Node *n = new Node{value, *head};
-  *head = n;
-}
+struct Queue {
+  QNode *front, *rear;
+  Queue() { front = rear = nullptr; }
 
-inline std::pair<int, int> dequeue(Node **head) {
-  if (*head == nullptr)
-    return {EMPTY, 0};
-  int n = (*head)->data;
-  *head = (*head)->next;
-  return {OK, n};
-}
+  void enqueue(int x) {
+    QNode *temp = new QNode(x);
+
+    if (rear == nullptr) {
+      front = rear = temp;
+      return;
+    }
+
+    rear->next = temp;
+    rear = temp;
+  }
+
+  void dequeue() {
+    if (front == nullptr)
+      return;
+
+    QNode *temp = front;
+    front = front->next;
+
+    if (front == nullptr)
+      rear = nullptr;
+
+    delete (temp);
+  }
+};
