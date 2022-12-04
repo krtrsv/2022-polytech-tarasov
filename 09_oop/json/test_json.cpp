@@ -4,7 +4,6 @@
 
 #include <doctest.h>
 
-
 TEST_CASE("All JSON types can be serialized") {
   CHECK_EQ(Json{}.serialize(), "{}");
 
