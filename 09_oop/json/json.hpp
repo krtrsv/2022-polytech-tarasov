@@ -1,3 +1,6 @@
+#ifndef JSON_HPP
+#define JSON_HPP
+
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -54,3 +57,5 @@ struct Json {
     return out;
   }
 };
+
+#endif

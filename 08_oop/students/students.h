@@ -1,3 +1,6 @@
+#ifndef STUDENTS_HPP
+#define STUDENTS_HPP
+
 #include <cstring>
 #include <initializer_list>
 #include <iostream>
@@ -173,3 +176,5 @@ public:
     return worst_students;
   }
 };
+
+#endif

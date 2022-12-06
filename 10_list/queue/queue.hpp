@@ -1,3 +1,6 @@
+#ifndef QUEUE_HPP
+#define QUEUE_HPP
+
 struct QNode {
   int data;
   QNode *next;
@@ -36,3 +39,5 @@ struct Queue {
     delete (temp);
   }
 };
+
+#endif

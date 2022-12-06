@@ -1,3 +1,6 @@
+#ifndef REVERSE_LL_HPP
+#define REVERSE_LL_HPP
+
 #include <random>
 
 struct Node {
@@ -5,7 +8,7 @@ struct Node {
   Node *next;
 };
 
-Node *generate(int n) {
+inline Node *generate(int n) {
   Node *ptr = nullptr;
   for (int i = n; i > 0; --i) {
     Node *new_node = new Node{i, ptr};
@@ -14,7 +17,7 @@ Node *generate(int n) {
   return ptr;
 }
 
-Node *generate_random(int n) {
+inline Node *generate_random(int n) {
   std::random_device rd;
 
   std::mt19937 rng(rd());
@@ -29,7 +32,7 @@ Node *generate_random(int n) {
   return ptr;
 }
 
-void reverse(Node **head) {
+inline void reverse(Node **head) {
   Node *current = *head;
   Node *prev = nullptr, *next = nullptr;
 
@@ -42,7 +45,7 @@ void reverse(Node **head) {
   *head = prev;
 }
 
-void reverse(Node **head, int left, int right) {
+inline void reverse(Node **head, int left, int right) {
   Node *curr = *head, *prev = NULL;
   int i;
   for (i = 0; i < left; i++) {
@@ -64,3 +67,5 @@ void reverse(Node **head, int left, int right) {
     *head = rhead;
   rtail->next = curr;
 }
+
+#endif

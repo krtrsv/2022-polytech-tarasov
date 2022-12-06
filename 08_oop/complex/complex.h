@@ -1,3 +1,6 @@
+#ifndef COMPLEX_HPP
+#define COMPLEX_HPP
+
 class Complex {
 public:
   int r_part;
@@ -8,3 +11,5 @@ public:
   const bool operator==(const Complex rv) const;
   const double abs() const;
 };
+
+#endif
