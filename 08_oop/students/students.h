@@ -14,11 +14,11 @@ struct Student {
     return out;
   }
 
-  const bool operator==(const Student &s) const {
+  bool operator==(const Student &s) const {
     return !(std::strcmp(name, s.name)) && score == s.score;
   }
 
-  const bool operator!=(const Student &s) const { return !(*this == s); }
+  bool operator!=(const Student &s) const { return !(*this == s); }
 };
 
 class StudentList {
@@ -102,7 +102,7 @@ public:
     return out;
   }
 
-  const bool operator==(const StudentList &sl) const {
+  bool operator==(const StudentList &sl) const {
     if (sl._size != _size)
       return false;
     for (std::size_t i = 0; i != _size; ++i) {
@@ -120,7 +120,7 @@ public:
     for (std::size_t i = 0; i < _size - 1; ++i)
       tmp[i] = _stud[i];
     tmp[_size - 1] = stud;
-    delete[] _stud;
+    // delete[] _stud;
     _stud = tmp;
     return *this;
   }
@@ -161,7 +161,7 @@ public:
     StudentList best_students{};
     for (std::size_t i = 0; i < _size; ++i) {
       if (_stud[i].score > 6)
-        best_students.append(_stud[i]);
+        best_students.append(_stud[i]); // ub
     }
     return best_students;
   }
@@ -171,7 +171,7 @@ public:
     StudentList worst_students{};
     for (std::size_t i = 0; i < _size; ++i) {
       if (_stud[i].score < 4)
-        worst_students.append(_stud[i]);
+        worst_students.append(_stud[i]); // ub
     }
     return worst_students;
   }
