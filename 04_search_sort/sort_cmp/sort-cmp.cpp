@@ -12,15 +12,14 @@ int partition(int arr[], int lo, int hi);
 int *swap(int arr[], int what, int with);
 
 int main() {
-  long long int help[] = {10,         100,          1000,
-                          1000000, // dead point
-                          1000000000, 1000000000000};
+  std::size_t array_sizes[] = {10,         100,          1000,
+                               1000000, // dead point
+                               1000000000, 1000000000000};
 
-  for (int i = 0; i != 5; ++i) {
+  for (std::size_t n : array_sizes) {
 
-    auto n = help[i];
-
-    int arr1[n], arr2[n];
+    int *arr1 = new int[n];
+    int *arr2 = new int[n];
 
     fill_array_random(arr1, n, 0, 10000);
     memcpy(arr2, arr1, n * sizeof(int));
@@ -37,6 +36,9 @@ int main() {
 
     std::printf("%.0e: %.5f (ss), %.5f (qs)\n", static_cast<double>(n),
                 ss_ms.count(), qs_ms.count());
+
+    delete[] arr1;
+    delete[] arr2;
   }
   return 0;
 }
