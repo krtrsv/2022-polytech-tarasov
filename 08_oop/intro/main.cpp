@@ -2,8 +2,9 @@
 #include <iostream>
 
 int main() {
-  String foo = "help";
-  String bar = foo + " pls";
-  std::cout << bar << '\n' << bar.get_length();
+  String str1 = "Monad is a ";
+  String str2 = str1 + "monoid in the category of endofunctors.";
+  std::cout << "String: " << str2 << '\n'
+            << "Length: " << str2.get_length() << std::endl;
   return 0;
 }

@@ -9,7 +9,7 @@ struct IJsonToken {
   std::string value;
 };
 
-struct JsonString : public IJsonToken {
+struct JsonString : IJsonToken {
   JsonString(std::string s) { value = '"' + s + '"'; }
 };
 
@@ -24,15 +24,12 @@ struct JsonBool : IJsonToken {
 struct JsonArray : IJsonToken {
   JsonArray(std::initializer_list<IJsonToken> v) {
     value = "[";
-    for (std::size_t i = 1; auto s : v) {
-      value.append(s.value);
-      // i hate it
-      if (i != v.size()) {
-        value.append(",");
-        i++;
-      }
+    for (std::size_t i = v.size(); auto s : v) {
+      value += s.value;
+      if (--i)
+        value += ',';
     }
-    value.append("]");
+    value += ']';
   }
 };
 
@@ -46,14 +43,12 @@ struct Json {
 
   std::string serialize() {
     std::string out = "{";
-    for (std::size_t i = 1; const auto &elem : tokens) {
-      out.append("\"" + elem.first + "\":" + elem.second.value);
-      if (i != tokens.size()) {
-        out.append(",");
-        i++;
-      }
+    for (std::size_t i = tokens.size(); auto &&[first, second] : tokens) {
+      out += "\"" + first + "\":" + second.value;
+      if (--i)
+        out += ',';
     }
-    out.append("}");
+    out += '}';
     return out;
   }
 };

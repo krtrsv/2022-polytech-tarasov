@@ -2,8 +2,8 @@
 
 #include "dictionary.hpp"
 
-#include <string>
 #include <doctest.h>
+#include <string>
 
 TEST_CASE("whatever") {
 
@@ -13,5 +13,4 @@ TEST_CASE("whatever") {
 
   CHECK_EQ(d1.size(), 2);
   CHECK_EQ(d1.get("first"), "hi");
-
 }
